@@ -24,13 +24,15 @@
   int pid;
 
 void handler(int mysignal){
-  printf("in handler\n");
+ // printf("in handler\n");
   if (strlen(childbuf) != 32 ){
-        printf("the gibuv doesnt succeded!");
+       // printf("the gibuv doesnt succeded!");
         exit(1);
   }
   else {
-  printf("%s", childbuf);
+    printf("%s%d%s","encrypted by process ",pid ," : ");
+	printf("%s\n",childbuf);
+
   //kill(pid, SIGKILL);
   
 }
@@ -38,7 +40,7 @@ void handler(int mysignal){
 
 int main() 
 { 
-	printf("enter string");
+	printf("plain text:");
     fgets(message,20,stdin);
     int p1[2],p2[2];
     signal( SIGUSR1, handler );
@@ -56,7 +58,7 @@ int main()
 		close(p1[0]);
 		close(p2[1]);
 		
-      printf("in parent!\n");
+     // printf("in parent!\n");
       write(p1[1],message,32);
       read(p2[0],childbuf, 32);
 	  wait(NULL);
